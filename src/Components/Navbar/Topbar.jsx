@@ -1,107 +1,83 @@
-import { useEffect, useState } from "react";
-import { CiBellOn, CiSearch, CiSettings } from "react-icons/ci";
-import { Link, useLocation } from "react-router-dom";
-import userImg from "../../assets/images/Avatar.png";
-const Topbar = () => {
-  const [active, setActive] = useState("/users");
+import { useState } from "react";
+import { FiSearch } from "react-icons/fi";
+import { HiMenuAlt1 } from "react-icons/hi";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import female from "../../assets/images/female.png";
+import male from "../../assets/images/male.png";
+import other from "../../assets/images/other.png";
+const Topbar = ({ toggle, setToggle }) => {
+  const [openMenu, setOpenMenu] = useState(null);
+  const { user } = useSelector((state) => state?.auth);
+  const handleMenuClose = () => {
+    setOpenMenu(null);
+  };
+
+  const handleMenuOpne = (event) => {
+    setOpenMenu(event.currentTarget);
+  };
+
+  const handleMenuOptionClick = (option) => {
+    // const clickedOn = option.target.innerText;
+    // if (clickedOn === "Delete") {
+    //   setIsDeleteMopen(true);
+    //   setOpenMenu(null);
+    // }
+    // if (clickedOn === "Edit") {
+    //   navigate("/trending/update-trend", { state: { data: data[1] } });
+    //   setOpenMenu(null);
+    // }
+    // setOpenMenu(null);
+  };
+
+  const onChangeHandler = (e) => {
+    // dispatch(getGlobalSearchStr(e.target.value));
+  };
 
   const location = useLocation();
 
-  useEffect(() => {
-    setActive(location?.pathname);
-  }, [location.pathname]);
   return (
-    <nav className="">
-      <div className="container w-full  mx-auto px-4">
-        <div className="flex justify-between">
-          <div className="hidden md:flex items-center space-x-1">
-            <div className="flex gap-3 items-center">
-              <Link to={"/"}>
-                <CiSearch className="cursor-pointer text-xl" />
-              </Link>
-              <Link to={"/"}>
-                <CiSettings className="cursor-pointer text-xl" />
-              </Link>
-              <Link to={"/"}>
-                <CiBellOn className="cursor-pointer text-xl" />
-              </Link>
-
-              <div className="">
-                <img
-                  className="w-8 h-8 rounded-full  cursor-pointer"
-                  src={userImg}
-                  alt=""
-                />
-                <div
-                  className="hidden bg-white text-base z-50 list-none divide-y divide-gray-100 rounded shadow my-4"
-                  id="dropdown"
-                >
-                  <div className="px-4 py-3">
-                    <span className="block text-sm">Bonnie Green</span>
-                    <span className="block text-sm font-medium text-gray-900 truncate">
-                      name@flowbite.com
-                    </span>
-                  </div>
-                  <ul className="py-1" aria-labelledby="dropdown">
-                    <li>
-                      <button className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+    <div
+      className="bg-white flex justify-between items-center shadow py-3 px-6 sticky top-0"
+      style={{ zIndex: 99 }}
+    >
+      <div className="w-full flex justify-between items-center gap-4">
+        <div className="transition-all duration-300 cursor-pointer rounded-full flex items-center gap-4">
+          <div onClick={() => setToggle(!toggle)} className=" block">
+            <HiMenuAlt1 />
           </div>
+          <div className="lg:w-[360px] w-64 lg:flex mr-8 md:flex hidden items-center relative">
+            <input
+              type="text"
+              className="w-full outline-none border border-gray-300 rounded-lg pr-3 pl-[34px] py-2"
+              placeholder="Search"
+              onChange={(e) => onChangeHandler(e)}
+            />
 
-          <div className=" md:hidden flex items-center">
-            <button className="mobile-menu-button">
-              <svg
-                className="w-6 h-6 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
+            <FiSearch className="text-gray-500 absolute top-1/2 -translate-y-1/2 left-3" />
+          </div>
+        </div>
+        <div className="flex gap-3 items-center">
+          <div
+            onClick={handleMenuOpne}
+            className="rounded-md flex items-center justify-between gap-2 px-4 lg:mr-0 md:mr-0 -mr-8 py-1 relative cursor-pointer"
+          >
+            <img
+              className="w-10 h-10 object-cover rounded-full  border-[3px] border-blue-200 hover:border-blue-300 transition duration-300"
+              src={
+                user?.photo?.url ||
+                (user?.gender === "Male"
+                  ? male
+                  : user?.gender === "Female"
+                  ? female
+                  : other)
+              }
+              alt={user?.name}
+            />
           </div>
         </div>
       </div>
-
-      <div className="mobile-menu hidden md:hidden text-white">
-        <Link
-          to="/"
-          className="block py-2 px-4 text-sm hover:bg-gray-200 text-white"
-        >
-          Home
-        </Link>
-        <Link to="/users" className="block py-2 px-4 text-sm hover:bg-gray-200">
-          Users
-        </Link>
-        <Link
-          to="/projects"
-          className="block py-2 px-4 text-sm hover:bg-gray-200"
-        >
-          Projects
-        </Link>
-        <Link to="/tasks" className="block py-2 px-4 text-sm hover:bg-gray-200">
-          Tasks
-        </Link>
-        <Link
-          to="/reporting"
-          className="block py-2 px-4 text-sm hover:bg-gray-200"
-        >
-          Reporting
-        </Link>
-      </div>
-    </nav>
+    </div>
   );
 };
 

@@ -58,7 +58,7 @@ export const navData = [
     stackName: "Others",
     data: [
       {
-        title: "Role Request",
+        title: "Role ",
         link: "/roles/user/request-role",
         icon: FiUserCheck,
         children: [

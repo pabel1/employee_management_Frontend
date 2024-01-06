@@ -21,7 +21,7 @@ const Sidebar = ({ toggle, setToggle }) => {
 
   const handleLogout = () => {
     dispatch(userLoggedOut());
-    localStorage.removeItem("akm_auth");
+    localStorage.removeItem("auth");
   };
 
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -38,7 +38,7 @@ const Sidebar = ({ toggle, setToggle }) => {
     <div className="min-h-screen relative bg-white border-r border-gray-300 overflow-x-hidden">
       <div
         onClick={() => setToggle(!toggle)}
-        className="bg-black h-7 w-7 bg-slate-200 hover:bg-slate-300 text-slate-700 hover:slate-800 rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
+        className=" h-7 w-7 bg-slate-200 hover:bg-slate-300 text-slate-700 hover:slate-800 rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
       >
         <BiChevronLeft className="text-2xl" />
       </div>
@@ -137,10 +137,10 @@ const Sidebar = ({ toggle, setToggle }) => {
           </div>
         ))}
 
-        <div className="group pb-8">
+        <div className=" absolute  bottom-0  w-full  group pb-8  ">
           <button
             onClick={handleLogout}
-            className={`py-2 w-full bg-red-500 hover:bg-red-600 text-white rounded-md flex justify-center transition duration-300`}
+            className={`py-2 w-[80%]  bg-red-500 hover:bg-red-600 text-white rounded-md flex justify-center transition duration-300`}
           >
             Logout
           </button>
