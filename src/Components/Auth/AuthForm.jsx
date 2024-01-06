@@ -31,7 +31,6 @@ const AuthForm = ({
         const result = await loginUser({
           bodyData: data,
         });
-        console.log(result);
         const { accessToken: token } = result?.data?.data || {};
         if (token) {
           navigate("/");

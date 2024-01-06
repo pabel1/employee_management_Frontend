@@ -39,15 +39,11 @@ const SignUpAuthForm = ({
         for (const key in data) {
           formData.append(key, data[key]);
         }
-
         if (selectedImage) {
-          console.log(selectedImage);
           formData.append("user_image", selectedImage);
         }
-
         const result = await signUpUser({ bodyData: formData });
-
-        const { token } = result?.data || {};
+        const { accessToken: token } = result?.data?.data || {};
         if (token) {
           navigate("/users");
           toast.success("SignUp Success!");
@@ -63,7 +59,6 @@ const SignUpAuthForm = ({
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-
     // Update the selectedImage state
     setSelectedImage(file);
 

@@ -4,7 +4,7 @@ const SignUpPage = () => {
   const handleSignUp = () => {};
   return (
     <SignUpAuthForm
-      title="Sign up to join with stack"
+      title="Sign up to join with Us"
       buttonText="Sign Up"
       onSubmit={(data) => handleSignUp(data)}
       linkText="Already have an account?"

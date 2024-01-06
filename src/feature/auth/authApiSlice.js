@@ -20,7 +20,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           console.log(result);
-          const { accessToken: token } = result?.data?.data || {};
+          const { accessToken: token, userData } = result?.data?.data || {};
 
           localStorage.setItem(
             "auth",
@@ -31,6 +31,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           dispatch(
             userLoggedIn({
               access_token: token,
+              user: userData,
             })
           );
         } catch (error) {
@@ -60,7 +61,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           console.log(result);
-          const { token, id } = result?.data || {};
+          const { accessToken: token, userData } = result?.data?.data || {};
 
           localStorage.setItem(
             "auth",
@@ -71,7 +72,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           dispatch(
             userLoggedIn({
               access_token: token,
-              user: id,
+              user: userData,
             })
           );
         } catch (error) {
