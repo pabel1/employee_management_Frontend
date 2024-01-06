@@ -38,13 +38,13 @@ const Sidebar = ({ toggle, setToggle }) => {
     <div className="min-h-screen relative bg-white border-r border-gray-300 overflow-x-hidden">
       <div
         onClick={() => setToggle(!toggle)}
-        className="h-7 w-7 bg-slate-200 hover:bg-slate-300 text-slate-700 hover:slate-800 rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
+        className="bg-black h-7 w-7 bg-slate-200 hover:bg-slate-300 text-slate-700 hover:slate-800 rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
       >
         <BiChevronLeft className="text-2xl" />
       </div>
       <div className="py-4 flex flex-col items-center justify-center gap-2">
         <Link to="/">
-          <img src={logo} className="w-28 rounded-sm" alt="" />
+          <img src={logo} className="w-12 rounded-sm" alt="" />
         </Link>
         <div>
           <h1 className="text-sm font-medium text-gray-500 text-center">

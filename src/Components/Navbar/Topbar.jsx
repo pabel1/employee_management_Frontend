@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { CiBellOn, CiSearch, CiSettings } from "react-icons/ci";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/images/030---Paper-Stack.png";
 import userImg from "../../assets/images/Avatar.png";
-import { navbarData } from "../data/data";
 const Topbar = () => {
   const [active, setActive] = useState("/users");
 
@@ -13,38 +11,11 @@ const Topbar = () => {
     setActive(location?.pathname);
   }, [location.pathname]);
   return (
-    <nav className="bg-[#6941C6]">
+    <nav className="">
       <div className="container w-full  mx-auto px-4">
         <div className="flex justify-between">
-          <div className="flex space-x-10">
-            <div>
-              <Link
-                to="/users"
-                className="flex items-center py-5 px-2 text-white"
-              >
-                <img className="w-10 h-8" src={logo} alt="logo" />
-                <span className="font-bold ml-2 text-xl">Stack</span>
-              </Link>
-            </div>
-
-            <div className="hidden md:flex items-center space-x-1">
-              {navbarData &&
-                navbarData?.map((item, i) => (
-                  <Link
-                    to={item.link}
-                    className={`py-1 px-3 text-white hover:bg-[#7F56D9] hover:rounded-lg ${
-                      active === item.link && "bg-[#7F56D9] rounded-lg"
-                    }`}
-                    key={i}
-                  >
-                    {item.title}
-                  </Link>
-                ))}
-            </div>
-          </div>
-
           <div className="hidden md:flex items-center space-x-1">
-            <div className="flex gap-3 text-white items-center">
+            <div className="flex gap-3 items-center">
               <Link to={"/"}>
                 <CiSearch className="cursor-pointer text-xl" />
               </Link>
