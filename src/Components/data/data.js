@@ -32,21 +32,25 @@ export const navData = [
       {
         title: "Dashboard",
         link: "/",
+        permission: ["All"],
         icon: RxDashboard,
       },
     ],
   },
   {
     stackName: "Management",
+
     data: [
       {
         title: "Users",
         link: "/users",
         icon: FiUsers,
+        permission: ["All"],
         children: [
           {
             title: "All users",
             link: "/users/all-users",
+            permission: ["Administrator", "Supervisor"],
             icon: RiUserFill,
           },
         ],
@@ -59,17 +63,20 @@ export const navData = [
     data: [
       {
         title: "Role ",
+        permission: ["Administrator", "Supervisor"],
         link: "/roles/user/request-role",
         icon: FiUserCheck,
         children: [
           {
             title: "User Role",
             link: "/roles",
+            permission: ["Administrator", "Supervisor"],
             icon: RiShieldUserFill,
           },
           {
             title: "Admin Roles",
             link: "/roles/all-roles",
+            permission: ["Administrator", "Supervisor"],
             icon: RiFileUserFill,
             roles: ["Admin", "Super Admin"],
           },
@@ -77,6 +84,7 @@ export const navData = [
             title: "Role Request",
             link: "/roles/role-request",
             icon: TbTableFilled,
+            permission: ["Administrator", "Supervisor"],
             roles: ["Admin", "Super Admin"],
           },
         ],

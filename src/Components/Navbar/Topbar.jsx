@@ -9,6 +9,7 @@ import other from "../../assets/images/other.png";
 const Topbar = ({ toggle, setToggle }) => {
   const [openMenu, setOpenMenu] = useState(null);
   const { user } = useSelector((state) => state?.auth);
+
   const handleMenuClose = () => {
     setOpenMenu(null);
   };

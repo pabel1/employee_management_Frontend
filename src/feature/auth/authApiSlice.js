@@ -20,7 +20,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           console.log(result);
-          const { accessToken: token, userData } = result?.data?.data || {};
+          const { accessToken: token, user } = result?.data?.data || {};
+          console.log(user);
 
           localStorage.setItem(
             "auth",
@@ -31,7 +32,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           dispatch(
             userLoggedIn({
               access_token: token,
-              user: userData,
+              user: user,
             })
           );
         } catch (error) {
