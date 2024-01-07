@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { actionBtn } from "../../../Utility/ClassName";
 import EmployeeProfileCard from "../../Components/Card/EmployeeProfileCard";
 import { useGetAllEmployeeQuery } from "../../feature/Employee/EmployeeApiSlice";
 
@@ -7,6 +9,7 @@ const AllEmployees = () => {
   const { access_token } = useSelector((state) => state?.auth);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
+
   const queryData = {
     // searchStr,
     // name,
@@ -35,8 +38,19 @@ const AllEmployees = () => {
     ));
   }
   return (
-    <div className=" container grid grid-cols-4 gap-4 items-center justify-center">
-      {content}
+    <div className=" ">
+      <div className=" flex items-center justify-end ">
+        <Link
+          to={`/employee/add-employee`}
+          className={`py-2 my-3 ${actionBtn} w-fit px-5 self-end `}
+        >
+          + Add Employee
+        </Link>
+      </div>
+
+      <div className=" container grid grid-cols-4 gap-4 items-center justify-center">
+        {content}
+      </div>
     </div>
   );
 };

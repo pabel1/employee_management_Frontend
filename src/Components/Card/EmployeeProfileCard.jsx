@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import dummy from "../../assets/images/dummyprofile.webp";
 const EmployeeProfileCard = ({ data }) => {
-  const { photo, name, email, userStatus, gender, _id } = data || {};
+  const navigate = useNavigate();
+  const { photo, name, email, userStatus, _id } = data || {};
   return (
-    <div className="border bg-white px-5 py-3 rounded-xl hover:shadow hover:border-primaryColor transition duration-300">
+    <div className="border bg-white px-5 py-3 rounded-xl hover:shadow hover:border-primaryColor transition duration-300 text-white">
       <div className="flex justify-between items-center">
         <div
           className={`rounded text-xs font-bold py-1 px-3 
@@ -39,11 +40,11 @@ const EmployeeProfileCard = ({ data }) => {
             </div>
             <div className="grid grid-cols-2 gap-2 mt-4">
               <button
-                // onClick={() => navigate(`/inbox2/messages/chat/${_id}`)}
+                onClick={() => navigate(`/employee/edit-employee/${_id}`)}
                 className="group text-sm flex items-center border border-[#8791E94D] bg-white py-1.5 justify-center rounded-md font-medium"
               >
                 <span className="ml-1 text-gray-500 group-hover:text-primaryColor">
-                  Inbox
+                  Edit
                 </span>
               </button>
               <button
@@ -53,7 +54,7 @@ const EmployeeProfileCard = ({ data }) => {
                 className="group text-sm flex items-center border border-[#8791E94D] bg-white py-1.f justify-center rounded-md font-medium"
               >
                 <span className="ml-1 text-gray-500 group-hover:text-primaryColor">
-                  Email
+                  Delete
                 </span>
               </button>
             </div>
