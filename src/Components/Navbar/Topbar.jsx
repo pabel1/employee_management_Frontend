@@ -2,11 +2,12 @@ import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import female from "../../assets/images/female.png";
 import male from "../../assets/images/male.png";
 import other from "../../assets/images/other.png";
 const Topbar = ({ toggle, setToggle }) => {
+  const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(null);
   const { user } = useSelector((state) => state?.auth);
 
@@ -15,7 +16,7 @@ const Topbar = ({ toggle, setToggle }) => {
   };
 
   const handleMenuOpne = (event) => {
-    setOpenMenu(event.currentTarget);
+    navigate("/my-profile");
   };
 
   const handleMenuOptionClick = (option) => {

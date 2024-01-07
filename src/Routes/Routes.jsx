@@ -1,10 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
+import AllEmployees from "../Pages/Employee/AllEmployees";
 import NotFoundPage from "../Pages/ErrorPage/NotFoundPage";
 import HomePage from "../Pages/HomePage/HomePage";
 import LoginPage from "../Pages/LoginPage";
+import MyProfile from "../Pages/MyProfile/MyProfile";
 import SignUpPage from "../Pages/SignUpPage";
-import Users from "../Pages/Users/Users";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
@@ -22,8 +23,12 @@ export const routes = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/users",
-        element: <Users />,
+        path: "/my-profile",
+        element: <MyProfile />,
+      },
+      {
+        path: "/employee/all-employee",
+        element: <AllEmployees />,
       },
     ],
   },

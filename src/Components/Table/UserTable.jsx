@@ -62,7 +62,7 @@ const UserTable = ({ data, page, setPage }) => {
               className="py-3  text-base font-medium tracking-wider text-left text-gray-500 w-[35%]"
             >
               <span className=" flex items-center gap-1">
-                User Info
+                Shift Name
                 <AiOutlineArrowDown className=" text-lg" />
               </span>
             </th>
@@ -70,13 +70,13 @@ const UserTable = ({ data, page, setPage }) => {
               scope=""
               className="py-3 text-base font-medium tracking-wider text-left text-gray-500 w-[35%]"
             >
-              About
+              Shift Time
             </th>
             <th
               scope=""
               className="py-3   text-base font-medium tracking-wider text-left text-gray-500 w-[15%]"
             >
-              Status
+              Date
             </th>
             <th scope="" className="p-4 w-[10%]">
               <span className=""></span>

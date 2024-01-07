@@ -5,7 +5,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     loginUser: builder.mutation({
       query: (data) => {
-        console.log(data);
         const { bodyData } = data;
         return {
           url: `/user/login`,
@@ -21,7 +20,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
 
           const { accessToken: token, user } = result?.data?.data || {};
-
+          console.log(result);
+          console.log(user);
           localStorage.setItem(
             "auth",
             JSON.stringify({
@@ -81,6 +81,39 @@ export const authApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["user"],
     }),
+    // refreshToken: builder.mutation({
+    //   query: () => {
+    //     return {
+    //       url: `/user/refresh-token`,
+    //       method: "POST",
+    //       credentials: "include",
+    //       headers: {
+    //         "Content-Type": "application/json;charset=UTF-8",
+    //       },
+    //     };
+    //   },
+    //   async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+    //     try {
+    //       const result = await queryFulfilled;
+    //       localStorage.setItem(
+    //         "auth",
+    //         JSON.stringify({
+    //           access_token: result?.data?.accessToken,
+    //           user: result?.data?.data?.user,
+    //         })
+    //       );
+    //       dispatch(
+    //         userLoggedIn({
+    //           access_token: result?.data?.data?.accessToken,
+    //           user: result.data?.data?.user,
+    //         })
+    //       );
+    //     } catch (error) {
+    //       // do nothing
+    //     }
+    //   },
+    //   providesTags: [""],
+    // }),
   }),
 });
 

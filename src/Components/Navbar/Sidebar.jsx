@@ -11,6 +11,7 @@ import SidebarItem from "./SidebarItem";
 const Sidebar = ({ toggle, setToggle }) => {
   const { user } = useSelector((state) => state?.auth);
 
+  console.log(user);
   const dispatch = useDispatch();
   const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState(null);

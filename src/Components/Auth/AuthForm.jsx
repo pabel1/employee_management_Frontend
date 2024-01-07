@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/030---Paper-Stack.png";
 import { useLoginUserMutation } from "../../feature/auth/authApiSlice";
+import { userLoggedIn } from "../../feature/auth/authSlice";
 import Button from "./Button";
 import Input from "./Input";
 
@@ -21,7 +23,7 @@ const AuthForm = ({
 
     formState: { errors },
   } = useForm();
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginUser] = useLoginUserMutation() || {};
 
@@ -31,8 +33,20 @@ const AuthForm = ({
         const result = await loginUser({
           bodyData: data,
         });
-        const { accessToken: token } = result?.data?.data || {};
+        const { accessToken: token, user } = result?.data?.data || {};
         if (token) {
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              access_token: token,
+            })
+          );
+          dispatch(
+            userLoggedIn({
+              access_token: token,
+              user: user,
+            })
+          );
           navigate("/");
           toast.success("login Success!");
         } else {

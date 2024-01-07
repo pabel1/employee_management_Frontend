@@ -42,14 +42,14 @@ export const navData = [
 
     data: [
       {
-        title: "Users",
-        link: "/users",
+        title: "Employee",
+        link: "/employee",
         icon: FiUsers,
-        permission: ["All"],
+        permission: ["Administrator", "Supervisor"],
         children: [
           {
-            title: "All users",
-            link: "/users/all-users",
+            title: "All Employee",
+            link: "/employee/all-employee",
             permission: ["Administrator", "Supervisor"],
             icon: RiUserFill,
           },
@@ -91,4 +91,11 @@ export const navData = [
       },
     ],
   },
+];
+
+export const tableHeading = [
+  "Shift Name",
+  "Shift Time",
+  "Date",
+  "Assign Employee",
 ];
