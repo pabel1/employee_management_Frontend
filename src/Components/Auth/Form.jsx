@@ -5,7 +5,7 @@ import Button from "./Button";
 import Input from "./Input";
 import PasswordLevelChecker from "./PasswordLevelChecker";
 
-const Form = ({ buttonText, formType }) => {
+const Form = ({ formType }) => {
   const [passwordLabel, setPasswordLabel] = useState("very weak");
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -163,7 +163,7 @@ const Form = ({ buttonText, formType }) => {
           <Button
             type="submit"
             customClass="bg-purple-600 text-white rounded-lg p-2 px-8 w-full"
-            text={buttonText}
+            text={formType === "viewUser" ? "" : "Submit"}
           />
         </div>
       </form>

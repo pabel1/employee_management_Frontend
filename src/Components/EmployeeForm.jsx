@@ -1,7 +1,18 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import dummy from "../assets/images/dummyprofile.webp";
 import Form from "./Auth/Form";
 const EmployeeForm = () => {
+  const { pathname } = useLocation();
+
+  let formType = "addUser"; // Default form type for Add Employee
+  if (pathname === "/employee/add-employee") {
+    formType = "addUser";
+  } else if (pathname === "/employee/edit-employee") {
+    formType = "editUser";
+  } else {
+    formType = "viewUser";
+  }
   return (
     <div className="grid grid-cols-3 space-x-6 py-4 bg-white px-3 rounded-lg mt-4">
       <section className=" col-span-1">
@@ -54,7 +65,7 @@ const EmployeeForm = () => {
       </section>
       <section className="col-span-2 p-5 shadow-md rounded-lg border-gray-100 border bg-white">
         <div>
-          <Form buttonText={"Add User"} formType={"addUser"} />
+          <Form formType={formType} />
         </div>
       </section>
     </div>
