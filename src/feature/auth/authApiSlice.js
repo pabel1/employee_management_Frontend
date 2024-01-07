@@ -63,6 +63,27 @@ export const authApiSlice = apiSlice.injectEndpoints({
 
       invalidatesTags: ["user"],
     }),
+    updateUser: builder.mutation({
+      query: (data) => {
+        const { bodyData, access_token, id } = data;
+
+        return {
+          url: `/user/update-user/${id}`,
+          method: "POST",
+          preparedHeaders: (headers) => {
+            headers.set("Content-type", "multipart/form-data");
+            return headers;
+          },
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+          body: bodyData,
+          // formData: true,
+        };
+      },
+
+      invalidatesTags: ["user"],
+    }),
     // refreshToken: builder.mutation({
     //   query: () => {
     //     return {
@@ -99,4 +120,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginUserMutation, useCreateUserMutation } = authApiSlice;
+export const {
+  useLoginUserMutation,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+} = authApiSlice;

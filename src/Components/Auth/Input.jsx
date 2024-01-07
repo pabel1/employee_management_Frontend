@@ -1,4 +1,11 @@
-const Input = ({ type, error, placeholder, customClassName, hookRef }) => {
+const Input = ({
+  type,
+  error,
+  placeholder,
+  customClassName,
+  hookRef,
+  readOnly,
+}) => {
   return (
     <input
       type={type}
@@ -9,6 +16,7 @@ const Input = ({ type, error, placeholder, customClassName, hookRef }) => {
       } w-full ${customClassName || ""}`}
       placeholder={placeholder}
       {...hookRef}
+      readOnly={readOnly ? readOnly : false}
     />
   );
 };

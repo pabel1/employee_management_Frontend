@@ -60,7 +60,7 @@ const EmployeeProfileCard = ({ data }) => {
             </div>
             <div className="flex flex-col w-full gap-y-2 mt-4">
               <Link
-                to={`/employee/${_id}`}
+                to={`/employee/view-employee/${_id}`}
                 className="text-center text-sm py-2 border border-primaryColor rounded-md font-medium bg-primaryColor hover:bg-transparent  hover:text-primaryColor transition duration-300"
               >
                 View Profile

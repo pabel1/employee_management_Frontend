@@ -79,16 +79,22 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
 
       invalidatesTags: ["user"],
     }),
-    updateUser: builder.mutation({
+    updateEmployee: builder.mutation({
       query: (data) => {
-        const { id } = data;
+        const { bodyData, access_token, id } = data;
+
         return {
-          url: `/api/users/${id}`,
+          url: `/user/update-user/${id}`,
           method: "PATCH",
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
+          preparedHeaders: (headers) => {
+            headers.set("Content-type", "multipart/form-data");
+            return headers;
           },
-          body: data,
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+          body: bodyData,
+          // formData: true,
         };
       },
 
@@ -102,5 +108,5 @@ export const {
   useGetLoggedInEmployeeQuery,
   useAddUserMutation,
   useDeleteUserMutation,
-  useUpdateUserMutation,
+  useUpdateEmployeeMutation,
 } = employeeApiSlice;

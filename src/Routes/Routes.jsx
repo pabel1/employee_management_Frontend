@@ -54,14 +54,7 @@ export const routes = createBrowserRouter([
       </PublicRoute>
     ),
   },
-  // {
-  //   path: "/signup",
-  //   element: (
-  //     <PublicRoute path={"/"}>
-  //       <SignUpPage />
-  //     </PublicRoute>
-  //   ),
-  // },
+
   {
     path: "*",
     element: <NotFoundPage />,

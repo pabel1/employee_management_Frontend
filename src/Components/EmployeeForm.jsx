@@ -1,14 +1,15 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import dummy from "../assets/images/dummyprofile.webp";
 import Form from "./Auth/Form";
 const EmployeeForm = () => {
   const { pathname } = useLocation();
 
+  const { id } = useParams();
   let formType = "addUser"; // Default form type for Add Employee
   if (pathname === "/employee/add-employee") {
     formType = "addUser";
-  } else if (pathname === "/employee/edit-employee") {
+  } else if (pathname === `/employee/edit-employee/${id}`) {
     formType = "editUser";
   } else {
     formType = "viewUser";

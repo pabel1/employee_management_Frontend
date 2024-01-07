@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/030---Paper-Stack.png";
 import { useLoginUserMutation } from "../../feature/auth/authApiSlice";
 import { userLoggedIn } from "../../feature/auth/authSlice";
@@ -121,12 +121,12 @@ const AuthForm = ({
               customClass="bg-purple-600 text-white rounded-lg p-2 w-full"
               text={buttonText}
             />
-            <p className="mt-3 text-gray-400 px-1">
+            {/* <p className="mt-3 text-gray-400 px-1">
               {linkText}{" "}
               <Link to={link} className="text-[#377DFF]">
                 {linkTo}
               </Link>
-            </p>
+            </p> */}
           </div>
         </form>
       </div>

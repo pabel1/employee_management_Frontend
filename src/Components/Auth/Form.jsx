@@ -2,14 +2,32 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useGetAllEmployeeQuery,
+  useUpdateEmployeeMutation,
+} from "../../feature/Employee/EmployeeApiSlice";
 import { useCreateUserMutation } from "../../feature/auth/authApiSlice";
 import Button from "./Button";
 import Input from "./Input";
 import PasswordLevelChecker from "./PasswordLevelChecker";
 
 const Form = ({ formType }) => {
+  const { id } = useParams();
+
   const { access_token } = useSelector((state) => state?.auth);
+
+  let queryData = {
+    _id: id,
+  };
+  const {
+    data: user,
+    isLoading,
+    isSuccess,
+  } = useGetAllEmployeeQuery(
+    { queryData, access_token },
+    { skip: formType === "addUser" ? true : false }
+  ) || {};
 
   const [passwordLabel, setPasswordLabel] = useState("very weak");
   const [selectedImage, setSelectedImage] = useState(null);
@@ -18,12 +36,14 @@ const Form = ({ formType }) => {
     register,
     handleSubmit,
     watch,
+    setValue,
 
     formState: { errors },
   } = useForm();
 
   const navigate = useNavigate();
   const [createUser] = useCreateUserMutation() || {};
+  const [updateEmployee] = useUpdateEmployeeMutation() || {};
   // const handleForm = async (data) => {
   //   try {
   //     if (formType === "addUser") {
@@ -63,6 +83,21 @@ const Form = ({ formType }) => {
         } else {
           toast.error(result?.error?.data?.error || "User create Faild!!");
         }
+      } else if (formType === "editUser") {
+        const formData = new FormData();
+
+        for (const key in data) {
+          formData.append(key, data[key]);
+        }
+        if (selectedImage) {
+          formData.append("user_image", selectedImage);
+        }
+        const result = await updateEmployee({
+          bodyData: formData,
+          access_token,
+          id,
+        });
+        console.log(result);
       }
     } catch (error) {
       // Handle login error
@@ -99,6 +134,15 @@ const Form = ({ formType }) => {
       setPasswordLabel("very strong");
     }
   }, [watch("password")]);
+
+  useEffect(() => {
+    if (user && (formType === "editUser" || formType === "viewUser")) {
+      setValue("name", user?.data[0].name || "");
+      setValue("email", user?.data[0].email || "");
+      setValue("phone", user?.data[0].phone || "");
+      setValue("password", user?.data[0].password || "");
+    }
+  }, [formType, user, setValue]);
   return (
     <div className=" px-3">
       <form
@@ -116,6 +160,7 @@ const Form = ({ formType }) => {
             error={errors?.name}
             customClassName="py-2 px-3 focus:ring-purple-200 focus:border-purple-400 "
             hookRef={{ ...register("name", { required: true }) }}
+            readOnly={formType === "viewUser"}
           />
           {errors?.name && (
             <span className="text-red-500">This field is required</span>
@@ -133,6 +178,7 @@ const Form = ({ formType }) => {
             error={errors?.email}
             customClassName="py-2 px-3 focus:ring-purple-200 focus:border-purple-400 "
             hookRef={{ ...register("email", { required: true }) }}
+            readOnly={formType === "viewUser"}
           />
           {errors?.email && (
             <span className="text-red-500">This field is required</span>
@@ -149,6 +195,7 @@ const Form = ({ formType }) => {
             error={errors?.phone}
             customClassName="py-2 px-3 focus:ring-purple-200 focus:border-purple-400"
             hookRef={{ ...register("phone", { required: true }) }}
+            readOnly={formType === "viewUser"}
           />
 
           {errors?.phone && (
@@ -171,6 +218,7 @@ const Form = ({ formType }) => {
             error={errors?.password}
             customClassName="py-2 px-3 focus:ring-purple-200 focus:border-purple-400"
             hookRef={{ ...register("password", { required: true }) }}
+            readOnly={formType === "viewUser"}
           />
 
           {errors?.password && (
@@ -188,7 +236,13 @@ const Form = ({ formType }) => {
           <Button
             type="submit"
             customClass="bg-purple-600 text-white rounded-lg p-2 px-8 w-full"
-            text={formType === "viewUser" ? "" : "Submit"}
+            text={
+              formType === "viewUser"
+                ? "Back"
+                : formType === "editUser"
+                ? "Submit"
+                : "Submit"
+            }
           />
         </div>
       </form>
