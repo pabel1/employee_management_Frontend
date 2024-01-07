@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import dummy from "../../../assets/images/dummyprofile.webp";
+// import dummy from "../../../assets/images/dummyprofile.webp";
 const EmployeeProfileCard = ({ data }) => {
   const { photo, name, email, userStatus, gender, _id } = data || {};
   return (
@@ -20,7 +20,7 @@ const EmployeeProfileCard = ({ data }) => {
             <div className="border-primaryColor border-2 p-1.5 -mb-8 rounded-full w-32 h-32 overflow-hidden bg-white">
               <img
                 className="w-full h-full rounded-full object-cover"
-                src={photo?.url ? photo?.url : dummy}
+                src={photo?.url ? photo?.url : ""}
                 alt=""
               />
             </div>

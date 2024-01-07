@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import EmployeeProfileCard from "../../Components/Card/EmployeeProfileCard";
 import { useGetAllEmployeeQuery } from "../../feature/Employee/EmployeeApiSlice";
 
 const AllEmployees = () => {
@@ -23,11 +24,20 @@ const AllEmployees = () => {
     isError,
   } = useGetAllEmployeeQuery({ queryData, access_token }) || {};
 
-  if (!isLoading && isSuccess && !isError) {
+  let content = null;
+  if (!isLoading && isSuccess && !isError && users) {
     console.log(users);
+    const { data, meta } = users || {};
+    content = data?.map((item, i) => (
+      <>
+        <EmployeeProfileCard key={i} data={item} />
+      </>
+    ));
   }
   return (
-    <div className=" container grid grid-cols-4 gap-4 items-center justify-center"></div>
+    <div className=" container grid grid-cols-4 gap-4 items-center justify-center">
+      {content}
+    </div>
   );
 };
 
