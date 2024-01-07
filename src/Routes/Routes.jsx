@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
+import AddEmployee from "../Pages/Employee/AddEmployee";
 import AllEmployees from "../Pages/Employee/AllEmployees";
 import NotFoundPage from "../Pages/ErrorPage/NotFoundPage";
 import HomePage from "../Pages/HomePage/HomePage";
@@ -29,6 +30,10 @@ export const routes = createBrowserRouter([
       {
         path: "/employee/all-employee",
         element: <AllEmployees />,
+      },
+      {
+        path: "/employee/add-employee",
+        element: <AddEmployee />,
       },
     ],
   },
