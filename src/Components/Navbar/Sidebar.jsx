@@ -10,7 +10,7 @@ import SidebarItem from "./SidebarItem";
 
 const Sidebar = ({ toggle, setToggle }) => {
   const { user } = useSelector((state) => state?.auth);
-  console.log(user);
+
   const dispatch = useDispatch();
   const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -57,9 +57,11 @@ const Sidebar = ({ toggle, setToggle }) => {
       <div className="mt-2 mx-4">
         {navData?.map(({ stackName, data }, index) => (
           <div className="my-5" key={index}>
-            <h2 className="text-gray-400 mb-2 uppercase font-bold text-xs ml-2">
-              {stackName}
-            </h2>
+            {data?.some((item) => item.permission && canAccessLink(item)) && (
+              <h2 className="text-gray-400 mb-2 uppercase font-bold text-xs ml-2">
+                {stackName}
+              </h2>
+            )}
             {data?.map((item, index) => (
               <SidebarItem
                 key={index}
