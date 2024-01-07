@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useCreateUserMutation } from "../../feature/auth/authApiSlice";
 import Button from "./Button";
 import Input from "./Input";
 import PasswordLevelChecker from "./PasswordLevelChecker";
 
 const Form = ({ formType }) => {
+  const { access_token } = useSelector((state) => state?.auth);
+
   const [passwordLabel, setPasswordLabel] = useState("very weak");
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -18,31 +23,51 @@ const Form = ({ formType }) => {
   } = useForm();
 
   const navigate = useNavigate();
-  //   const handleForm = async (data) => {
-  //     try {
-  //       if (formType === "signup") {
-  //         const formData = new FormData();
-
-  //         for (const key in data) {
-  //           formData.append(key, data[key]);
-  //         }
-  //         if (selectedImage) {
-  //           formData.append("user_image", selectedImage);
-  //         }
-  //         const result = await signUpUser({ bodyData: formData });
-  //         const { accessToken: token } = result?.data?.data || {};
-  //         if (token) {
-  //           navigate("/users");
-  //           toast.success("SignUp Success!");
-  //         } else {
-  //           toast.error(result?.error?.data?.error || "SignUp failed!");
-  //         }
-  //       }
-  //     } catch (error) {
-  //       // Handle login error
-  //       console.error("Login failed", error);
+  const [createUser] = useCreateUserMutation() || {};
+  // const handleForm = async (data) => {
+  //   try {
+  //     if (formType === "addUser") {
+  //       // Uncomment and modify the logic for adding a new user
+  //       // const result = await addUserApiCall(data);
+  //       // Handle the result accordingly
+  //       // Example: if (result.success) { /* success logic */ }
+  //     } else if (formType === "editUser") {
+  //       // Uncomment and modify the logic for editing an existing user
+  //     } else if (formType === "viewUser") {
+  //       // Handle view user logic (if needed)
   //     }
-  //   };
+  //   } catch (error) {
+  //     console.error("Form submission failed", error);
+  //   }
+  // };
+  const handleForm = async (data) => {
+    try {
+      if (formType === "addUser") {
+        const formData = new FormData();
+
+        for (const key in data) {
+          formData.append(key, data[key]);
+        }
+        if (selectedImage) {
+          formData.append("user_image", selectedImage);
+        }
+        const result = await createUser({ bodyData: formData, access_token });
+        console.log(result?.data?.data.result);
+        const { user } = result?.data?.data.result || {};
+        console.log(result);
+
+        if (result?.data?.success) {
+          console.log("first");
+          navigate("/employee/all-employee");
+          toast.success("User Create Successfull!");
+        } else {
+          toast.error(result?.error?.data?.error || "User create Faild!!");
+        }
+      }
+    } catch (error) {
+      // Handle login error
+    }
+  };
 
   //   const handleImageChange = (e) => {
   //     const file = e.target.files[0];
@@ -78,7 +103,7 @@ const Form = ({ formType }) => {
     <div className=" px-3">
       <form
         className="form mt-3 grid grid-cols-2 md:grid-cols-1 gap-3 items-center justify-center"
-        // onSubmit={handleSubmit(handleForm)}
+        onSubmit={handleSubmit(handleForm)}
       >
         <div className="mt-2">
           <label htmlFor="email" className="text text-base my-4 font-medium">

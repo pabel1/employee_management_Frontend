@@ -40,9 +40,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["user"],
     }),
-    signUpUser: builder.mutation({
+    createUser: builder.mutation({
       query: (data) => {
-        const { bodyData } = data;
+        const { bodyData, access_token } = data;
 
         console.log(data);
 
@@ -53,32 +53,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
             headers.set("Content-type", "multipart/form-data");
             return headers;
           },
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
           body: bodyData,
           // formData: true,
         };
       },
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          console.log(result);
-          const { accessToken: token, userData } = result?.data?.data || {};
 
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              access_token: token,
-            })
-          );
-          dispatch(
-            userLoggedIn({
-              access_token: token,
-              user: userData,
-            })
-          );
-        } catch (error) {
-          // do nothing
-        }
-      },
       invalidatesTags: ["user"],
     }),
     // refreshToken: builder.mutation({
@@ -117,4 +99,4 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginUserMutation, useSignUpUserMutation } = authApiSlice;
+export const { useLoginUserMutation, useCreateUserMutation } = authApiSlice;
