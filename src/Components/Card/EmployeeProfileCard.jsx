@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import dummy from "../../assets/images/dummyprofile.webp";
+import { setUserID } from "../../feature/Delete/deleteUserSlice";
+import { showModal } from "../../feature/Modal/DeleteModalSlice";
 const EmployeeProfileCard = ({ data }) => {
+  const dispatch = useDispatch();
+  const [show, setShow] = useState();
   const navigate = useNavigate();
   const { photo, name, email, userStatus, _id } = data || {};
   return (
@@ -49,7 +54,8 @@ const EmployeeProfileCard = ({ data }) => {
               </button>
               <button
                 onClick={() => {
-                  // Construct the Gmail link
+                  dispatch(showModal());
+                  dispatch(setUserID({ _id }));
                 }}
                 className="group text-sm flex items-center border border-[#8791E94D] bg-white py-1.f justify-center rounded-md font-medium"
               >

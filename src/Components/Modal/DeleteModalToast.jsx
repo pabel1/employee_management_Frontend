@@ -1,13 +1,20 @@
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "../../feature/Modal/DeleteModalSlice";
 import { useDeleteUserMutation } from "../../feature/user/userApiSlice";
 
-const DeleteModal = ({ show, setShow, userId }) => {
+const DeleteModal = () => {
+  const dispatch = useDispatch();
+  const { show } = useSelector((state) => state?.modal);
+  console.log(show);
+  const { userId } = useSelector((state) => state?.deleteUser);
+  console.log(userId);
   const [deleteUser, { isLoading }] = useDeleteUserMutation();
 
   const handleDelete = async (id) => {
     try {
       const res = await deleteUser({ id });
-      setShow(false);
+      dispatch(closeModal());
       console.log(res);
       if (res === null) {
         toast.success("User deleted successfully");
@@ -29,7 +36,7 @@ const DeleteModal = ({ show, setShow, userId }) => {
             <div className="header flex justify-between items-center">
               <h2 className="text-lg font-semibold">Delete User</h2>
               <button
-                onClick={() => setShow(false)}
+                onClick={() => dispatch(closeModal())}
                 className="bg-gray-50 rounded-full"
               >
                 <span className="text-2xl" aria-hidden="true">
@@ -72,7 +79,7 @@ const DeleteModal = ({ show, setShow, userId }) => {
             </span>
             <span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
               <button
-                onClick={() => setShow(false)}
+                onClick={() => dispatch(closeModal())}
                 type="button"
                 className="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5"
               >

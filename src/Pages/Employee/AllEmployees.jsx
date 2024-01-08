@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { actionBtn } from "../../../Utility/ClassName";
 import EmployeeProfileCard from "../../Components/Card/EmployeeProfileCard";
+import DeleteModal from "../../Components/Modal/DeleteModalToast";
 import { useGetAllEmployeeQuery } from "../../feature/Employee/EmployeeApiSlice";
 
 const AllEmployees = () => {
@@ -51,6 +52,8 @@ const AllEmployees = () => {
       <div className=" container grid grid-cols-4 gap-4 items-center justify-center">
         {content}
       </div>
+
+      <DeleteModal />
     </div>
   );
 };
