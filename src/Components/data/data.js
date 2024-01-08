@@ -1,6 +1,5 @@
 import { FiUserCheck, FiUsers } from "react-icons/fi";
 import { RiFileUserFill, RiShieldUserFill, RiUserFill } from "react-icons/ri";
-import { RxDashboard } from "react-icons/rx";
 import { TbTableFilled } from "react-icons/tb";
 export const navbarData = [
   {
@@ -27,17 +26,6 @@ export const navbarData = [
 
 export const navData = [
   {
-    stackName: "Overview",
-    data: [
-      {
-        title: "Dashboard",
-        link: "/",
-        permission: ["All"],
-        icon: RxDashboard,
-      },
-    ],
-  },
-  {
     stackName: "Management",
 
     data: [
@@ -53,6 +41,32 @@ export const navData = [
             permission: ["Administrator", "Supervisor"],
             icon: RiUserFill,
           },
+        ],
+      },
+      {
+        title: "Shift",
+        link: "/shift",
+        icon: FiUsers,
+        permission: ["Administrator", "Supervisor"],
+        children: [
+          {
+            title: "All Shifts",
+            link: "/shifts",
+            permission: ["Administrator", "Supervisor"],
+            icon: RiUserFill,
+          },
+          {
+            title: "My Shift",
+            link: "/my-shift",
+            permission: ["Administrator", "Supervisor", "Employee"],
+            icon: RiUserFill,
+          },
+          // {
+          //   title: "Assign Shift",
+          //   link: "/assign-shifts",
+          //   permission: ["Administrator", "Supervisor","Employee"],
+          //   icon: RiUserFill,
+          // },
         ],
       },
     ],

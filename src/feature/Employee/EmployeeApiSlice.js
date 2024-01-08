@@ -84,6 +84,7 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       query: (data) => {
         const { bodyData, access_token, id } = data;
 
+        console.log(bodyData);
         return {
           url: `/user/update-user/${id}`,
           method: "PATCH",

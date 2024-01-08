@@ -8,6 +8,9 @@ import NotFoundPage from "../Pages/ErrorPage/NotFoundPage";
 import HomePage from "../Pages/HomePage/HomePage";
 import LoginPage from "../Pages/LoginPage";
 import MyProfile from "../Pages/MyProfile/MyProfile";
+import AllShift from "../Pages/Shift/AllShift";
+import MyShift from "../Pages/Shift/MyShift";
+import ShiftAssign from "../Pages/Shift/ShiftAssign";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
@@ -43,6 +46,18 @@ export const routes = createBrowserRouter([
       {
         path: "/employee/view-employee/:id",
         element: <ViewEmployee />,
+      },
+      {
+        path: "/shifts",
+        element: <AllShift />,
+      },
+      {
+        path: "/my-shift",
+        element: <MyShift />,
+      },
+      {
+        path: "/assign-shift/:shift",
+        element: <ShiftAssign />,
       },
     ],
   },

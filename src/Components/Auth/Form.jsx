@@ -49,22 +49,7 @@ const Form = ({ formType }) => {
     useCreateUserMutation() || {};
   const [updateEmployee, { isLoading: isLoadingUpdate }] =
     useUpdateEmployeeMutation() || {};
-  // const handleForm = async (data) => {
-  //   try {
-  //     if (formType === "addUser") {
-  //       // Uncomment and modify the logic for adding a new user
-  //       // const result = await addUserApiCall(data);
-  //       // Handle the result accordingly
-  //       // Example: if (result.success) { /* success logic */ }
-  //     } else if (formType === "editUser") {
-  //       // Uncomment and modify the logic for editing an existing user
-  //     } else if (formType === "viewUser") {
-  //       // Handle view user logic (if needed)
-  //     }
-  //   } catch (error) {
-  //     console.error("Form submission failed", error);
-  //   }
-  // };
+
   const handleForm = async (data) => {
     try {
       if (formType === "addUser") {
