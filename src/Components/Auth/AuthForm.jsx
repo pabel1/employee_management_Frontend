@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/030---Paper-Stack.png";
 import { useLoginUserMutation } from "../../feature/auth/authApiSlice";
-import { userLoggedIn } from "../../feature/auth/authSlice";
 import Button from "./Button";
 import Input from "./Input";
 
@@ -35,18 +34,6 @@ const AuthForm = ({
         });
         const { accessToken: token, user } = result?.data?.data || {};
         if (token) {
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              access_token: token,
-            })
-          );
-          dispatch(
-            userLoggedIn({
-              access_token: token,
-              user: user,
-            })
-          );
           navigate("/");
           toast.success("login Success!");
         } else {

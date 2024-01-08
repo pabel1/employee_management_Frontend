@@ -1,60 +1,74 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useGetLoggedInEmployeeQuery } from "../feature/Employee/EmployeeApiSlice";
-import { userLoggedIn, userLoggedOut } from "../feature/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { isTokenExpired } from "../../Utility/isTokenExpired";
+import { useRefreshTokenMutation } from "../feature/auth/authApiSlice";
+import { userLoggedOut } from "../feature/auth/authSlice";
 
 export default function useAuthCheck() {
   const [authChecked, setAuthChecked] = useState(false);
-  const [authToken, setAuthToken] = useState();
-
+  const [authToken, setAuthToken] = useState("");
+  const { access_token } = useSelector((state) => state.auth);
+  const [refreshToken] = useRefreshTokenMutation();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const localAuth = localStorage?.getItem("auth");
-    console.log(localAuth);
-    if (localAuth) {
-      const auth = JSON.parse(localAuth);
-      setAuthToken(auth?.access_token);
-    } else {
-      dispatch(userLoggedOut());
-      localStorage.removeItem("auth");
-    }
-  }, []);
-
-  const { data, isLoading, isError, isSuccess, error } =
-    useGetLoggedInEmployeeQuery(authToken, {
-      skip: !authToken,
-      refetchOnReconnect: true,
-    }) || {};
 
   useEffect(() => {
-    if (!isLoading && isSuccess && !isError) {
-      // console.log(data?.data.result.user);
-      dispatch(
-        userLoggedIn({
-          access_token: authToken,
-          user: data?.data.result.user,
-        })
-      );
-    }
-    if (!isLoading && error) {
-      dispatch(userLoggedOut());
-      localStorage.removeItem("auth");
-    }
+    const authCheck = async () => {
+      if (access_token) {
+        try {
+          const isAccessTokenExpired = isTokenExpired(access_token);
 
-    setTimeout(() => {
-      if (!isLoading) {
+          if (isAccessTokenExpired) {
+            const newAccessToken = await refreshToken();
+
+            console.log(newAccessToken);
+            if (newAccessToken?.error) {
+              dispatch(userLoggedOut());
+              localStorage.removeItem("auth");
+              setAuthChecked(false);
+              return;
+            }
+
+            if (newAccessToken?.data?.data?.accessToken) {
+              // Update the access token and store it in memory or state
+              setAuthToken(newAccessToken?.data?.data?.accessToken);
+
+              // Update your local storage or state with the new token
+              localStorage.setItem(
+                "auth",
+                JSON.stringify({
+                  access_token: newAccessToken?.data?.data?.accessToken,
+                  user: newAccessToken?.data?.data?.user,
+                })
+              );
+
+              setAuthChecked(true);
+              return;
+            }
+          }
+
+          setAuthToken(access_token);
+          setAuthChecked(true);
+        } catch (error) {
+          dispatch(userLoggedOut());
+          localStorage.removeItem("auth");
+          setAuthChecked(true);
+        }
+      } else {
+        dispatch(userLoggedOut());
+        localStorage.removeItem("auth");
         setAuthChecked(true);
       }
-    }, 1000);
+    };
+    authCheck();
   }, [
     dispatch,
     setAuthChecked,
+    setAuthToken,
     authToken,
-    isError,
-    isSuccess,
-    data?.data.result.user,
-    isLoading,
-    error,
+    authChecked,
+    access_token,
+    refreshToken,
   ]);
+
   return authChecked;
 }
