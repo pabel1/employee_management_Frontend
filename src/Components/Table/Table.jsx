@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { IoCheckboxOutline } from "react-icons/io5";
 import { LuPen } from "react-icons/lu";
-import {
-  MdCheckBoxOutlineBlank,
-  MdOutlineCheckBoxOutlineBlank,
-  MdOutlineIndeterminateCheckBox,
-} from "react-icons/md";
+import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import DeleteModal from "../Modal/DeleteModalToast";
 import FormModal from "../Modal/FormModal";
@@ -43,20 +39,6 @@ const Table = ({ data, page, setPage, tableHeading }) => {
       <table className=" w-full divide-y divide-gray-200 table-fixed ">
         <thead className="bg-gray-100 px-4">
           <tr className="w-full">
-            <th scope="" className="py-4 pl-4 w-[5%]  ">
-              <div className="flex items-center">
-                <div
-                  onClick={() => handleAllChecked()}
-                  className=" rounded-md bg-[#F9FAFB]   flex justify-center items-center select-none"
-                >
-                  {checkedUsers.length > 0 ? (
-                    <MdOutlineIndeterminateCheckBox className="text-[#7F56D9] text-2xl rounded-2xl" />
-                  ) : (
-                    <MdCheckBoxOutlineBlank className="text-[#7F56D9] text-2xl rounded-2xl" />
-                  )}
-                </div>
-              </div>
-            </th>
             <th
               scope=""
               className="py-3  text-base font-medium tracking-wider text-left text-gray-500 w-[35%]"
