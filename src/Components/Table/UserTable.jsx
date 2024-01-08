@@ -10,7 +10,7 @@ import {
 import { RiDeleteBinLine } from "react-icons/ri";
 import DeleteModal from "../Modal/DeleteModalToast";
 import FormModal from "../Modal/FormModal";
-const UserTable = ({ data, page, setPage }) => {
+const UserTable = ({ data, page, setPage,tableHeading }) => {
   const [show, setShow] = useState(false);
   const [showAddUser, setShowAddUser] = useState(false);
   const [userId, setUserId] = useState(0);

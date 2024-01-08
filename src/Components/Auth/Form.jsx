@@ -45,8 +45,10 @@ const Form = ({ formType }) => {
   } = useForm();
 
   const navigate = useNavigate();
-  const [createUser] = useCreateUserMutation() || {};
-  const [updateEmployee] = useUpdateEmployeeMutation() || {};
+  const [createUser, { isLoading: isLoadingCreate }] =
+    useCreateUserMutation() || {};
+  const [updateEmployee, { isLoading: isLoadingUpdate }] =
+    useUpdateEmployeeMutation() || {};
   // const handleForm = async (data) => {
   //   try {
   //     if (formType === "addUser") {
@@ -105,21 +107,6 @@ const Form = ({ formType }) => {
       // Handle login error
     }
   };
-
-  //   const handleImageChange = (e) => {
-  //     const file = e.target.files[0];
-  //     // Update the selectedImage state
-  //     setSelectedImage(file);
-
-  //     // Display the image preview
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setImagePreview(reader.result);
-  //     };
-  //     if (file) {
-  //       reader.readAsDataURL(file);
-  //     }
-  //   };
 
   useEffect(() => {
     const passwordLength = watch("password")?.length || 0;
@@ -235,17 +222,25 @@ const Form = ({ formType }) => {
         </div>
 
         <div className="w-fit ">
-          <Button
-            type="submit"
-            customClass="bg-purple-600 text-white rounded-lg p-2 px-8 w-full"
-            text={
-              formType === "viewUser"
-                ? "Back"
-                : formType === "editUser"
-                ? "Submit"
-                : "Submit"
-            }
-          />
+          {isLoadingCreate || isLoadingUpdate ? (
+            <Button
+              type="submit"
+              customClass="bg-purple-600 text-white rounded-lg p-2 px-8 w-full"
+              text={" Submiting..."}
+            />
+          ) : (
+            <Button
+              type="submit"
+              customClass="bg-purple-600 text-white rounded-lg p-2 px-8 w-full"
+              text={
+                formType === "viewUser"
+                  ? "Back"
+                  : formType === "editUser"
+                  ? "Submit"
+                  : "Submit"
+              }
+            />
+          )}
         </div>
       </form>
     </div>

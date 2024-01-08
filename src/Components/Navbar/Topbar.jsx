@@ -16,7 +16,7 @@ const Topbar = ({ toggle, setToggle }) => {
   };
 
   const handleMenuOpne = (event) => {
-    navigate("/my-profile");
+    navigate(`/employee/view-employee/${user._id}`);
   };
 
   const handleMenuOptionClick = (option) => {
