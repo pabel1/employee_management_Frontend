@@ -1,23 +1,30 @@
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { useDeleteEmployeeMutation } from "../../feature/Employee/EmployeeApiSlice";
 import { closeModal } from "../../feature/Modal/DeleteModalSlice";
-import { useDeleteUserMutation } from "../../feature/user/userApiSlice";
 
 const DeleteModal = () => {
   const dispatch = useDispatch();
   const { show } = useSelector((state) => state?.modal);
-  console.log(show);
+  const { access_token } = useSelector((state) => state?.auth);
+
   const { userId } = useSelector((state) => state?.deleteUser);
-  console.log(userId);
-  const [deleteUser, { isLoading }] = useDeleteUserMutation();
+
+  const [deleteEmployee, { isLoading }] = useDeleteEmployeeMutation();
 
   const handleDelete = async (id) => {
     try {
-      const res = await deleteUser({ id });
+      const res = await deleteEmployee({ id, access_token });
       dispatch(closeModal());
       console.log(res);
-      if (res === null) {
-        toast.success("User deleted successfully");
+      const { error, data } = res || {};
+      if (data) {
+        toast.success("Employee deleted successfully");
+      }
+      if (error) {
+        toast.error(
+          error?.data?.message || "You  are not Authorized to Delete"
+        );
       }
     } catch (error) {
       toast.error("Something went wrong");
@@ -34,7 +41,7 @@ const DeleteModal = () => {
         <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
           <div className="p-5">
             <div className="header flex justify-between items-center">
-              <h2 className="text-lg font-semibold">Delete User</h2>
+              <h2 className="text-lg font-semibold">Delete Employee</h2>
               <button
                 onClick={() => dispatch(closeModal())}
                 className="bg-gray-50 rounded-full"
@@ -47,12 +54,13 @@ const DeleteModal = () => {
             <div className="body mt-8">
               <div className="text-center sm:text-left">
                 <h3 className="text-lg leading-6 font-medium text-gray-900">
-                  Delete User
+                  Delete Employee
                 </h3>
                 <div className="mt-2">
                   <p className="text-sm leading-5 text-gray-500">
-                    Are you sure you want to delete This user? All of your data
-                    will be permanently removed. This action cannot be undo.
+                    Are you sure you want to delete This Employee? All of your
+                    data will be permanently removed. This action cannot be
+                    undo.
                   </p>
                 </div>
               </div>

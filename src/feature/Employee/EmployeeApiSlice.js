@@ -65,13 +65,14 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
 
       invalidatesTags: ["user"],
     }),
-    deleteUser: builder.mutation({
+    deleteEmployee: builder.mutation({
       query: (data) => {
-        const { id } = data;
+        const { id, access_token } = data;
         return {
-          url: `/api/users/${id}`,
+          url: `/user/delete-user/${id}`,
           method: "DELETE",
           headers: {
+            Authorization: `Bearer ${access_token}`,
             "Content-Type": "application/json;charset=UTF-8",
           },
         };
@@ -107,6 +108,6 @@ export const {
   useGetAllEmployeeQuery,
   useGetLoggedInEmployeeQuery,
   useAddUserMutation,
-  useDeleteUserMutation,
+  useDeleteEmployeeMutation,
   useUpdateEmployeeMutation,
 } = employeeApiSlice;

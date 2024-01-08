@@ -72,16 +72,15 @@ const Form = ({ formType }) => {
           formData.append("user_image", selectedImage);
         }
         const result = await createUser({ bodyData: formData, access_token });
-        console.log(result?.data?.data.result);
+
         const { user } = result?.data?.data.result || {};
-        console.log(result);
 
         if (result?.data?.success) {
           console.log("first");
           navigate("/employee/all-employee");
           toast.success("User Create Successfull!");
         } else {
-          toast.error(result?.error?.data?.error || "User create Faild!!");
+          toast.error(result?.error?.data?.message || "User create Faild!!");
         }
       } else if (formType === "editUser") {
         const formData = new FormData();
