@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import dummy from "../assets/images/dummyprofile.webp";
+import { setProfileImage } from "../feature/Image/ImageUplodeHelperSlice";
 import Form from "./Auth/Form";
 const EmployeeForm = () => {
   const { pathname } = useLocation();
-
+  const dispatch = useDispatch();
   const { id } = useParams();
+  const profileImage = useSelector(
+    (state) => state?.imageUploader?.profileImage
+  );
+  const [previewImage, setPreviewImage] = useState(profileImage || dummy);
+
+  const onDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+      dispatch(setProfileImage(file));
+    }
+  };
+
+  const { getRootProps, getInputProps, open } = useDropzone({
+    accept: "image/*",
+    onDrop,
+  });
+
   let formType = "addUser"; // Default form type for Add Employee
   if (pathname === "/employee/add-employee") {
     formType = "addUser";
@@ -31,8 +53,10 @@ const EmployeeForm = () => {
                   height: "150px",
                   borderRadius: "50%",
                 }}
-                className=" rounded-full flex items-center justify-between border-dashed border-2"
+                className="rounded-full flex items-center justify-between border-dashed border-2"
+                {...getRootProps()}
               >
+                <input {...getInputProps()} />
                 <img
                   style={{
                     width: "130px",
@@ -40,15 +64,9 @@ const EmployeeForm = () => {
                     borderRadius: "50%",
                   }}
                   className="mx-auto my-auto"
-                  src={
-                    //   data.photo
-                    //     ? data.photo
-                    //     : data.gender === "Female"
-                    //     ? selectedImage
-                    //     : selectedImageMale
-                    dummy
-                  }
+                  src={previewImage}
                   alt=""
+                  onClick={open}
                 />
               </div>
             </div>

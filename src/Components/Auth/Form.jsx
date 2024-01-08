@@ -16,6 +16,9 @@ const Form = ({ formType }) => {
   const { id } = useParams();
 
   const { access_token } = useSelector((state) => state?.auth);
+  const profileImage = useSelector(
+    (state) => state?.imageUploader?.profileImage
+  );
 
   let queryData = {
     _id: id,
@@ -68,8 +71,8 @@ const Form = ({ formType }) => {
         for (const key in data) {
           formData.append(key, data[key]);
         }
-        if (selectedImage) {
-          formData.append("user_image", selectedImage);
+        if (profileImage) {
+          formData.append("user_image", profileImage);
         }
         const result = await createUser({ bodyData: formData, access_token });
 
