@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { actionBtn } from "../../../Utility/ClassName";
 import EmployeeProfileCard from "../../Components/Card/EmployeeProfileCard";
+import FormModal from "../../Components/Modal/FormModal";
 import { useGetAssignShiftDetailsQuery } from "../../feature/AssignShift/assignShiftApiSlice";
 
 const ShiftAssign = () => {
   const { access_token } = useSelector((state) => state?.auth);
   const { shiftID } = useParams();
+  const [showAddUser, setShowAddUser] = useState(false);
 
   const {
     data: assignShift,
@@ -32,20 +34,25 @@ const ShiftAssign = () => {
       </>
     ));
   }
+
+  const handleAssignShift = () => {
+    setShowAddUser(true);
+  };
   return (
     <div>
       <div className=" flex items-center justify-end ">
-        <Link
-          to={`/employee/add-employee`}
+        <button
+          onClick={() => handleAssignShift()}
           className={`py-2 my-3 ${actionBtn} w-fit px-5 self-end `}
         >
           + Assign Shift
-        </Link>
+        </button>
       </div>
 
       <div className=" container grid grid-cols-4 gap-4 items-center justify-center">
         {content}
       </div>
+      <FormModal showAddUser={showAddUser} setShowAddUser={setShowAddUser} />
     </div>
   );
 };
