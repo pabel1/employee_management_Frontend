@@ -4,11 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import dummy from "../../assets/images/dummyprofile.webp";
 import { setUserID } from "../../feature/Delete/deleteUserSlice";
 import { showModal } from "../../feature/Modal/DeleteModalSlice";
-const EmployeeProfileCard = ({ data }) => {
+const EmployeeProfileCard = ({ data, shift }) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState();
   const navigate = useNavigate();
+  console.log(shift);
   const { photo, name, email, userStatus, _id } = data || {};
+
+  const handleEditORRemove = (shift, _id) => {
+    if (!shift) {
+      console.log("first");
+      navigate(`/employee/edit-employee/${_id}`);
+    }
+  };
   return (
     <div className="border bg-white px-5 py-3 rounded-xl hover:shadow hover:border-primaryColor transition duration-300 text-white">
       <div className="flex justify-between items-center">
@@ -22,9 +30,7 @@ const EmployeeProfileCard = ({ data }) => {
         >
           {userStatus}
         </div>
-        <div>
-          {/* <AdminEmployeeProfileOptionsDropdown profileData={profileData} /> */}
-        </div>
+        <div></div>
       </div>
       <div>
         <>
@@ -45,11 +51,11 @@ const EmployeeProfileCard = ({ data }) => {
             </div>
             <div className="grid grid-cols-2 gap-2 mt-4">
               <button
-                onClick={() => navigate(`/employee/edit-employee/${_id}`)}
+                onClick={() => handleEditORRemove(shift, _id)}
                 className="group text-sm flex items-center border border-[#8791E94D] bg-white py-1.5 justify-center rounded-md font-medium"
               >
                 <span className="ml-1 text-gray-500 group-hover:text-primaryColor">
-                  Edit
+                  {shift ? "Remove Shift" : "Edit"}
                 </span>
               </button>
               <button

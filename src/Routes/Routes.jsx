@@ -56,7 +56,7 @@ export const routes = createBrowserRouter([
         element: <MyShift />,
       },
       {
-        path: "/assign-shift/:shift",
+        path: "/assign-shift/:shiftID",
         element: <ShiftAssign />,
       },
     ],
