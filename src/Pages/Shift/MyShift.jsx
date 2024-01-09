@@ -13,9 +13,6 @@ const MyShift = () => {
 
   let content = null;
   if (!isLoading && isSuccess && data) {
-    console.log(data);
-
-    console.log(data?.data?.result);
     content = (
       <Table
         data={data?.data?.result}
@@ -26,7 +23,14 @@ const MyShift = () => {
       />
     );
   }
-  return <div>{content}</div>;
+  return (
+    <div>
+      <div className=" my-10">
+        <h1 className=" text-2xl">My Shift</h1>
+      </div>
+      {content}
+    </div>
+  );
 };
 
 export default MyShift;

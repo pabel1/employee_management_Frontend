@@ -1,14 +1,16 @@
 import moment from "moment";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { IoEyeOutline } from "react-icons/io5";
 import { LuPen } from "react-icons/lu";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDeleteShiftMutation } from "../../feature/Shift/shiftApiSlice";
 
 const Table = ({ data, meta, page, setPage, tableHeading }) => {
-  const { user } = useSelector((state) => state?.auth);
+  const { user, access_token } = useSelector((state) => state?.auth);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [showAddUser, setShowAddUser] = useState(false);
@@ -16,6 +18,17 @@ const Table = ({ data, meta, page, setPage, tableHeading }) => {
   const [userData, setUserData] = useState();
   const [allChecked, setAllChecked] = useState(false);
   const [checkedUsers, setCheckedUsers] = useState([]);
+
+  const [deleteShift] = useDeleteShiftMutation() || {};
+  const handleDelete = async (id) => {
+    const response = await deleteShift({ access_token, id });
+    const { error, data } = response || {};
+    if (error) {
+      toast.error(error?.data?.message || "Failed !!!");
+    } else if (data) {
+      toast.success(data?.message || "Successfully deleted !!!");
+    }
+  };
 
   return (
     <>
@@ -87,18 +100,9 @@ const Table = ({ data, meta, page, setPage, tableHeading }) => {
                 <div className="flex gap-5 justify-center">
                   <RiDeleteBinLine
                     className="text-gray-600 cursor-pointer text-lg"
-                    onClick={() => {
-                      setShow(true);
-                      // setUserId(user?.id);
-                    }}
+                    onClick={() => handleDelete(item._id)}
                   />
-                  <LuPen
-                    className="text-gray-600 cursor-pointer text-lg"
-                    onClick={() => {
-                      setShowAddUser(true);
-                      // setUserData(user);
-                    }}
-                  />
+                  <LuPen className="text-gray-600 cursor-pointer text-lg" />
                 </div>
               </td>
             </tr>

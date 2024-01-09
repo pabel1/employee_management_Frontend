@@ -20,7 +20,22 @@ export const shiftApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["shift"],
     }),
+    deleteShift: builder.mutation({
+      query: (data) => {
+        const { id, access_token } = data;
+        return {
+          url: `/shift/delete/${id}`,
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        };
+      },
+
+      invalidatesTags: ["shift"],
+    }),
   }),
 });
 
-export const { useGetAllShiftQuery } = shiftApiSlice;
+export const { useGetAllShiftQuery, useDeleteShiftMutation } = shiftApiSlice;
