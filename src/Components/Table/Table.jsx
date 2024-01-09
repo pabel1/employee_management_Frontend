@@ -97,12 +97,25 @@ const Table = ({ data, meta, page, setPage, tableHeading }) => {
                 </td>
               ))}
               <td className="">
-                <div className="flex gap-5 justify-center">
+                <div
+                  className="flex gap-5 justify-center"
+                  disabled={user?.role === "Employee"}
+                >
                   <RiDeleteBinLine
-                    className="text-gray-600 cursor-pointer text-lg"
+                    className={`text-gray-600  text-lg ${
+                      user?.role === "Employee"
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
                     onClick={() => handleDelete(item._id)}
                   />
-                  <LuPen className="text-gray-600 cursor-pointer text-lg" />
+                  <LuPen
+                    className={`text-gray-600  text-lg ${
+                      user?.role === "Employee"
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                  />
                 </div>
               </td>
             </tr>
