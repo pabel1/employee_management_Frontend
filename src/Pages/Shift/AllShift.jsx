@@ -23,9 +23,8 @@ const AllShift = () => {
     useGetAllShiftQuery({ queryData, access_token }) || {};
   let content = null;
   if (!isLoading && isSuccess && !isError && data) {
-    console.log(data);
     const { data: shifts, meta } = data || {};
-    console.log(shifts);
+
     content = (
       <Table
         data={shifts}

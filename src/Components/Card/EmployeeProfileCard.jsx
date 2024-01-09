@@ -35,7 +35,7 @@ const EmployeeProfileCard = ({ data, shift }) => {
       <div>
         <>
           <div className="flex justify-center items-center shadow-med">
-            <div className="border-primaryColor border-2 p-1.5 -mb-8 rounded-full w-32 h-32 overflow-hidden bg-white">
+            <div className="border-primaryColor border-2 p-1.5 -mb-8 rounded-full w-24 h-24 overflow-hidden bg-white">
               <img
                 className="w-full h-full rounded-full object-cover"
                 src={photo?.url ? photo?.url : dummy}
@@ -44,12 +44,14 @@ const EmployeeProfileCard = ({ data, shift }) => {
             </div>
           </div>
 
-          <div className="bg-[#8791E91A] p-5 rounded-xl">
+          <div className="bg-[#8791E91A] p-3 rounded-xl">
             <div className="text-center mt-6">
               <p className="text-primaryColor text-lg font-medium">{name}</p>
               <p className="text-gray-600 text-sm">{email}</p>
             </div>
-            <div className="grid grid-cols-2 gap-2 mt-4">
+            <div
+              className={`grid  ${shift} ? " grid-cols-1" : " grid-cols-2" gap-2 mt-4 `}
+            >
               <button
                 onClick={() => handleEditORRemove(shift, _id)}
                 className="group text-sm flex items-center border border-[#8791E94D] bg-white py-1.5 justify-center rounded-md font-medium"
@@ -58,14 +60,17 @@ const EmployeeProfileCard = ({ data, shift }) => {
                   {shift ? "Remove Shift" : "Edit"}
                 </span>
               </button>
+
               <button
                 onClick={() => {
                   dispatch(showModal());
                   dispatch(setUserID({ _id }));
                 }}
-                className="group text-sm flex items-center border border-[#8791E94D] bg-white py-1.f justify-center rounded-md font-medium"
+                className={`group text-sm  items-center border border-[#8791E94D] bg-white py-1.f justify-center rounded-md font-medium ${
+                  shift ? "hidden" : "flex"
+                }`}
               >
-                <span className="ml-1 text-gray-500 group-hover:text-primaryColor">
+                <span className="ml-1 text-gray-500 group-hover:text-primaryColor py-1.5">
                   Delete
                 </span>
               </button>

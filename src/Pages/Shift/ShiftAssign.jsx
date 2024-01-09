@@ -21,10 +21,7 @@ const ShiftAssign = () => {
 
   let content = null;
   if (!isLoading && isSuccess && !isError && assignShift) {
-    console.log(assignShift);
     const { result } = assignShift?.data || {};
-    console.log(result);
-
     content = result?.map((item, i) => (
       <>
         <EmployeeProfileCard
