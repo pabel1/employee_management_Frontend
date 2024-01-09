@@ -1,20 +1,37 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import dummy from "../../assets/images/dummyprofile.webp";
+import { useRemoveAssignShiftMutation } from "../../feature/AssignShift/assignShiftApiSlice";
 import { setUserID } from "../../feature/Delete/deleteUserSlice";
 import { showModal } from "../../feature/Modal/DeleteModalSlice";
-const EmployeeProfileCard = ({ data, shift }) => {
+const EmployeeProfileCard = ({ data, shift, assignID }) => {
   const dispatch = useDispatch();
+
+  const { access_token } = useSelector((state) => state?.auth);
   const [show, setShow] = useState();
   const navigate = useNavigate();
   console.log(shift);
   const { photo, name, email, userStatus, _id } = data || {};
 
-  const handleEditORRemove = (shift, _id) => {
+  const [removeAssignShift, { isLoading }] =
+    useRemoveAssignShiftMutation() || {};
+  const handleEditORRemove = async (shift, _id) => {
     if (!shift) {
       console.log("first");
       navigate(`/employee/edit-employee/${_id}`);
+    } else {
+      const response = await removeAssignShift({
+        id: assignID,
+        access_token,
+      });
+      if (response.data) {
+        toast.success(response?.data?.message);
+      } else if (response.error) {
+        toast.error(response?.error?.data?.message);
+      }
     }
   };
   return (
@@ -52,14 +69,26 @@ const EmployeeProfileCard = ({ data, shift }) => {
             <div
               className={`grid  ${shift} ? " grid-cols-1" : " grid-cols-2" gap-2 mt-4 `}
             >
-              <button
-                onClick={() => handleEditORRemove(shift, _id)}
-                className="group text-sm flex items-center border border-[#8791E94D] bg-white py-1.5 justify-center rounded-md font-medium"
-              >
-                <span className="ml-1 text-gray-500 group-hover:text-primaryColor">
-                  {shift ? "Remove Shift" : "Edit"}
-                </span>
-              </button>
+              {isLoading ? (
+                <button
+                  onClick={() => handleEditORRemove(_id)}
+                  disabled
+                  className="group text-sm flex items-center border border-[#8791E94D] bg-white py-1.5 justify-center rounded-md font-medium cursor-not-allowed"
+                >
+                  <span className="ml-1 text-gray-500 group-hover:text-primaryColor">
+                    {isLoading ? "Removing..." : "Remove Shift"}
+                  </span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleEditORRemove(shift, _id)}
+                  className="group text-sm flex items-center border border-[#8791E94D] bg-white py-1.5 justify-center rounded-md font-medium"
+                >
+                  <span className="ml-1 text-gray-500 group-hover:text-primaryColor">
+                    {shift ? "Remove Shift" : "Edit"}
+                  </span>
+                </button>
+              )}
 
               <button
                 onClick={() => {

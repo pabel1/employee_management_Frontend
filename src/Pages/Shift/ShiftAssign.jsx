@@ -23,6 +23,7 @@ const ShiftAssign = () => {
 
   let content = null;
   if (!isLoading && isSuccess && !isError && assignShift) {
+    console.log(assignShift);
     const { result } = assignShift?.data || {};
     content = result?.map((item, i) => (
       <>
@@ -30,6 +31,7 @@ const ShiftAssign = () => {
           key={i}
           data={item?.Employee}
           shift={item?.Shift}
+          assignID={item?._id}
         />
       </>
     ));

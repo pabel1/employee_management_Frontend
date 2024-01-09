@@ -95,9 +95,9 @@ const FormModal = ({ showAddUser, setShowAddUser, type, data }) => {
       console.log(response);
       const { data } = response?.data || {};
 
-      if (data && data?.success) {
+      if (data) {
         closeModal();
-        toast.successc("Shift Assign Successfull! Try again");
+        toast.success("Shift Assign Successfull! Try again");
       } else {
         toast.error(
           response?.error?.data?.message || "Shift Assign Failed! Try again"
