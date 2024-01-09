@@ -1,9 +1,44 @@
 # employee_management_Frontend
 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Table of Contents
 
-Currently, two official plugins are available:
+- [About the Project](#Employee shift management project using React js (vite))
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Run the Application](#run-the-application)
+- [Usage](#usage)
+  - [Login Credentials](#login-credentials)
+- [Contributing](#contributing)
+- [License](#license)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About the Project
+
+[#Employee shift management project using React js (vite)]
+
+
+ **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/pabel1/employee_management_Frontend.git
+
+## Getting Started
+  # npm install
+
+Login Credentials
+Admin:
+
+Email: admin@gmail.com
+Password: 12345678
+Employee:
+
+Email: employee@gmail.com
+Password: 12345678
+Supervisor:
+
+Email: supervisor@gmail.com
+Password: 12345678
+Feel free to explore different functionalities and features!
+
+
