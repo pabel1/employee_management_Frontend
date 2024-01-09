@@ -13,7 +13,7 @@ const EmployeeProfileCard = ({ data, shift, assignID }) => {
   const { access_token } = useSelector((state) => state?.auth);
   const [show, setShow] = useState();
   const navigate = useNavigate();
-  console.log(shift);
+
   const { photo, name, email, userStatus, _id } = data || {};
 
   const [removeAssignShift, { isLoading }] =

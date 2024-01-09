@@ -34,7 +34,7 @@ const AuthForm = ({
         });
         const { accessToken: token, user } = result?.data?.data || {};
         if (token) {
-          navigate("/");
+          navigate("/my-shift");
           toast.success("login Success!");
         } else {
           toast.error(result?.error?.data?.error || "login failed!");

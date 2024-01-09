@@ -22,6 +22,7 @@ const ShiftAssign = () => {
   }) || {};
 
   let content = null;
+  let shiftContent = null;
   if (!isLoading && isSuccess && !isError && assignShift) {
     console.log(assignShift);
     const { result } = assignShift?.data || {};
@@ -35,6 +36,19 @@ const ShiftAssign = () => {
         />
       </>
     ));
+    shiftContent = (
+      <>
+        <div>
+          <h1 className=" text-2xl text-gray-500 font-medium ">
+            {result[0]?.Shift?.shiftName} Shift
+          </h1>
+          <p className=" text-lg text-gray-500 font-medium ">
+            {/* {moment(result[0]?.Shift?.date).format("MMM D, YYYY")} */}
+            {result[0]?.Shift?.startTime} to {result[0]?.Shift?.endTime}
+          </p>
+        </div>
+      </>
+    );
   }
 
   const handleAssignShift = () => {
@@ -42,7 +56,9 @@ const ShiftAssign = () => {
   };
   return (
     <div>
-      <div className=" flex items-center justify-end ">
+      <div className=" flex items-center justify-between ">
+        <div className="  px-8  my-2 ">{shiftContent} </div>
+
         <button
           onClick={() => handleAssignShift()}
           className={`py-2 my-3 ${actionBtn} w-fit px-5 self-end `}
@@ -51,7 +67,7 @@ const ShiftAssign = () => {
         </button>
       </div>
 
-      <div className=" container grid grid-cols-4 gap-4 items-center justify-center">
+      <div className=" container grid grid-cols-4 gap-4 items-center justify-center mt-6">
         {content}
       </div>
       <FormModal showAddUser={showAddUser} setShowAddUser={setShowAddUser} />

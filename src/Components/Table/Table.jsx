@@ -4,9 +4,11 @@ import { AiOutlineArrowDown } from "react-icons/ai";
 import { IoEyeOutline } from "react-icons/io5";
 import { LuPen } from "react-icons/lu";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Table = ({ data, meta, page, setPage, tableHeading }) => {
+  const { user } = useSelector((state) => state?.auth);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [showAddUser, setShowAddUser] = useState(false);
@@ -68,8 +70,13 @@ const Table = ({ data, meta, page, setPage, tableHeading }) => {
                     </span>
                   ) : index === 3 ? (
                     <button
-                      className="px-3 py-1 inline-flex text-xl leading-5 font-normal rounded-full bg-green-100 text-"
+                      className={`px-3 py-1 inline-flex text-xl leading-5 font-normal rounded-full bg-green-100 ${
+                        user?.role === "Employee"
+                          ? "cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
                       onClick={() => navigate(`/assign-shift/${item._id}`)}
+                      disabled={user?.role === "Employee"}
                     >
                       <IoEyeOutline />
                     </button>
@@ -97,45 +104,47 @@ const Table = ({ data, meta, page, setPage, tableHeading }) => {
             </tr>
           ))}
         </tbody>
-        <tfoot>
-          <tr>
-            <td
-              colSpan={5}
-              className="py-4 px-4 text-sm font-medium text-gray-900 whitespace-nowrap w-[35%]"
-            >
-              <div className="flex items-center gap-2 justify-between">
-                <button
-                  onClick={() => {
-                    if (page > 1) {
-                      setPage(page - 1);
-                    }
-                  }}
-                  className={`font-normal border border-gray-200 px-3 py-2 rounded-lg ${
-                    page === 1 && "opacity-50 cursor-not-allowed"
-                  }`}
-                >
-                  Previous
-                </button>
-                <h2 className="font-normal">
-                  page {page} of {Math.ceil(meta.total / meta.limit)}
-                </h2>
-                <button
-                  onClick={() => {
-                    if (page < Math.ceil(meta.total / meta.limit)) {
-                      setPage(page + 1);
-                    }
-                  }}
-                  className={`font-normal border border-gray-200 px-3 py-2 rounded-lg ${
-                    page === Math.ceil(meta.total / meta.limit) &&
-                    "opacity-50 cursor-not-allowed"
-                  }`}
-                >
-                  Next
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tfoot>
+        {meta && (
+          <tfoot>
+            <tr>
+              <td
+                colSpan={5}
+                className="py-4 px-4 text-sm font-medium text-gray-900 whitespace-nowrap w-[35%]"
+              >
+                <div className="flex items-center gap-2 justify-between">
+                  <button
+                    onClick={() => {
+                      if (page > 1) {
+                        setPage(page - 1);
+                      }
+                    }}
+                    className={`font-normal border border-gray-200 px-3 py-2 rounded-lg ${
+                      page === 1 && "opacity-50 cursor-not-allowed"
+                    }`}
+                  >
+                    Previous
+                  </button>
+                  <h2 className="font-normal">
+                    page {page} of {Math.ceil(meta.total / meta.limit)}
+                  </h2>
+                  <button
+                    onClick={() => {
+                      if (page < Math.ceil(meta.total / meta.limit)) {
+                        setPage(page + 1);
+                      }
+                    }}
+                    className={`font-normal border border-gray-200 px-3 py-2 rounded-lg ${
+                      page === Math.ceil(meta.total / meta.limit) &&
+                      "opacity-50 cursor-not-allowed"
+                    }`}
+                  >
+                    Next
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        )}
       </table>
     </>
   );

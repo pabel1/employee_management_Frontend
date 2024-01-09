@@ -17,6 +17,21 @@ export const assignShiftApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["assignShift"],
     }),
+    myShift: builder.query({
+      query: (data) => {
+        const { access_token } = data || {};
+
+        return {
+          url: `assign-shift/my-shift`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        };
+      },
+      providesTags: ["assignShift"],
+    }),
     createAssignShift: builder.mutation({
       query: (data) => {
         const { access_token, bodyData } = data || {};
@@ -55,4 +70,5 @@ export const {
   useGetAssignShiftDetailsQuery,
   useCreateAssignShiftMutation,
   useRemoveAssignShiftMutation,
+  useMyShiftQuery,
 } = assignShiftApiSlice;

@@ -1,28 +1,6 @@
 import { FiUserCheck, FiUsers } from "react-icons/fi";
 import { RiFileUserFill, RiShieldUserFill, RiUserFill } from "react-icons/ri";
 import { TbTableFilled } from "react-icons/tb";
-export const navbarData = [
-  {
-    title: "Home",
-    link: "/",
-  },
-  {
-    title: "Users",
-    link: "/users",
-  },
-  {
-    title: "Projects",
-    link: "/projects",
-  },
-  {
-    title: "Tasks",
-    link: "/tasks",
-  },
-  {
-    title: "Reporting",
-    link: "/reporting",
-  },
-];
 
 export const navData = [
   {
@@ -47,7 +25,7 @@ export const navData = [
         title: "Shift",
         link: "/shift",
         icon: FiUsers,
-        permission: ["Administrator", "Supervisor"],
+        permission: ["Administrator", "Supervisor", "Employee"],
         children: [
           {
             title: "All Shifts",
@@ -64,7 +42,7 @@ export const navData = [
           // {
           //   title: "Assign Shift",
           //   link: "/assign-shifts",
-          //   permission: ["Administrator", "Supervisor","Employee"],
+          //   permission: ["Administrator", "Supervisor"],
           //   icon: RiUserFill,
           // },
         ],
@@ -113,3 +91,4 @@ export const tableHeading = [
   "Date",
   "Assign Employee",
 ];
+export const myShiftTableHeading = ["Shift Name", "Shift Time", "Date"];
